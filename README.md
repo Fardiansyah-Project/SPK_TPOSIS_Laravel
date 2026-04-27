@@ -1,66 +1,95 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Sistem Pendukung Keputusan (SPK) Penentuan Penerima BPNT - Metode TOPSIS
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi berbasis web ini dikembangkan menggunakan kerangka kerja (framework) **Laravel 11** dan didesain menggunakan **Tailwind CSS**. Sistem ini menggunakan algoritma **TOPSIS (Technique for Order Preference by Similarity to Ideal Solution)** untuk membantu menentukan kandidat terbaik yang berhak menerima Bantuan Pangan Non Tunai (BPNT).
 
-## About Laravel
+## 🌟 Fitur Utama
+1. **Autentikasi Aman:** Sistem login untuk admin.
+2. **Manajemen Kriteria & Sub Kriteria:** CRUD kriteria yang dinamis dengan pembobotan otomatis.
+3. **Manajemen Objek & Kandidat:** Menambahkan penduduk dan memilih siapa saja yang akan diikutkan dalam penilaian.
+4. **Penilaian Dinamis:** Memberikan nilai kepada setiap kandidat berdasarkan sub-kriteria yang telah dibuat.
+5. **Perhitungan TOPSIS Otomatis:** Perhitungan matematis (Matriks Keputusan, Normalisasi, Normalisasi Berbobot, Jarak Solusi Ideal, dan Nilai Preferensi) diproses seketika di latar belakang.
+6. **Ekspor Laporan PDF:** Menghasilkan dokumen cetak PDF berisi hasil perangkingan secara instan.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🛠️ Persyaratan Sistem (Prerequisites)
+Sebelum menjalankan proyek ini di komputer Anda, pastikan Anda telah menginstal aplikasi berikut:
+- **PHP** versi 8.2 atau yang lebih baru.
+- **Composer** (untuk mengelola dependensi PHP).
+- **MySQL / MariaDB** (bisa menggunakan XAMPP, Laragon, dsb).
+- **Git** (opsional, untuk mengkloning repositori).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🚀 Langkah-langkah Instalasi dan Menjalankan Proyek
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Ikuti panduan berikut secara berurutan untuk menjalankan aplikasi ini di komputer lokal Anda:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 1. Dapatkan Kode Sumber (Clone/Download)
+Ekstrak folder proyek ini ke dalam komputer Anda, atau *clone* melalui terminal:
+```bash
+git clone <url-repository-ini>
+cd penentuan_BPNT_metode_TOPSIS
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 2. Instal Dependensi PHP (Composer)
+Buka terminal/Command Prompt di dalam folder proyek tersebut, lalu jalankan:
+```bash
+composer install
+```
+*Catatan: Pastikan komputer Anda terhubung ke internet karena proses ini akan mengunduh pustaka Laravel dan DOMPDF.*
 
-## Laravel Sponsors
+### 3. Konfigurasi File *Environment* (.env)
+Salin file konfigurasi bawaan Laravel:
+```bash
+cp .env.example .env
+```
+*(Di Windows PowerShell, Anda bisa menggunakan perintah `copy .env.example .env`)*
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Buka file `.env` menggunakan teks editor (Notepad/VS Code), dan ubah bagian koneksi database sesuaikan dengan pengaturan MySQL Anda:
+```ini
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=spk_bpnt_topsis   <-- (Atau nama database apa saja yang Anda buat di phpMyAdmin)
+DB_USERNAME=root              <-- (Username MySQL Anda, biasanya root)
+DB_PASSWORD=                  <-- (Kosongkan jika Anda memakai XAMPP default)
+```
 
-### Premium Partners
+### 4. Buat Database
+Buka **phpMyAdmin** (biasanya di `http://localhost/phpmyadmin`) dan buat sebuah database baru dengan nama yang sama seperti yang Anda isikan di `DB_DATABASE` (contoh: `spk_bpnt_topsis`).
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### 5. Generate Application Key
+Jalankan perintah ini di terminal untuk membuat kunci enkripsi aplikasi:
+```bash
+php artisan key:generate
+```
 
-## Contributing
+### 6. Migrasi Tabel & Masukkan Data Awal (Seeding)
+Jalankan perintah berikut untuk membuat semua tabel yang dibutuhkan beserta memasukkan akun Admin default:
+```bash
+php artisan migrate:fresh --seed
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 7. Jalankan Aplikasi
+Nyalakan *local server* Laravel dengan perintah:
+```bash
+php artisan serve
+```
+Aplikasi kini berjalan. Buka browser Anda dan kunjungi URL berikut:
+👉 **`http://127.0.0.1:8000`**
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 🔐 Kredensial Login Default
 
-## Security Vulnerabilities
+Karena Anda telah menjalankan perintah `--seed` pada langkah ke-6, sebuah akun administrator telah terbuat secara otomatis. Gunakan data berikut untuk masuk ke dalam sistem:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- **Email:** `admin@admin.com`
+- **Password:** `password123`
 
-## License
+*(Catatan: Anda bisa mengubah data seeder ini di file `database/seeders/UserSeeder.php`)*
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+### Catatan Tambahan Terkait Desain (Tailwind)
+Aplikasi ini menggunakan **Tailwind CSS via CDN** untuk penataannya. Oleh karena itu, Anda **tidak perlu** menginstal NodeJS atau menjalankan perintah `npm run dev`. Tampilan akan otomatis bekerja asalkan komputer/browser Anda terhubung ke jaringan internet.
