@@ -50,6 +50,7 @@
                 @endforelse
             </tbody>
         </table>
+        {{ $subKriterias->links() }}
     </div>
 </div>
 @endsection

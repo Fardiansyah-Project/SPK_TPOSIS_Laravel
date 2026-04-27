@@ -10,7 +10,7 @@ class SubKriteriaController extends Controller
 {
     public function index()
     {
-        $subKriterias = SubKriteria::with('kriteria')->orderBy('kriteria_id')->get();
+        $subKriterias = SubKriteria::with('kriteria')->orderBy('kriteria_id', 'asc')->paginate(10);
         return view('sub_kriteria.index', compact('subKriterias'));
     }
 
@@ -31,7 +31,7 @@ class SubKriteriaController extends Controller
         $kriteria = Kriteria::findOrFail($request->kriteria_id);
 
         $subkriteria = new SubKriteria();
-        $subkriteria->kode = $kriteria->kode . "." . (int)SubKriteria::where('kriteria_id', $request->kriteria_id)->count()+1;
+        $subkriteria->kode = $kriteria->kode . "." . (int)SubKriteria::where('kriteria_id', $request->kriteria_id)->count() + 1;
         $subkriteria->nama = $request->nama;
         $subkriteria->nilai = $request->nilai;
         $subkriteria->kriteria_id = $request->kriteria_id;

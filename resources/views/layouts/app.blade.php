@@ -56,10 +56,17 @@
         <header class="h-16 bg-white shadow-sm flex items-center justify-between px-6 z-10">
             <h2 class="text-xl font-semibold text-gray-800">@yield('header')</h2>
             <div class="flex items-center space-x-4">
-                <span class="text-sm font-medium text-gray-500">Admin Panel</span>
-                <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold">
-                    A
+                <span class="text-sm font-medium text-gray-500">Halo, {{ Auth::user()->name ?? 'Admin' }}</span>
+                <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold shadow-sm">
+                    {{ substr(Auth::user()->name ?? 'A', 0, 1) }}
                 </div>
+                
+                <form method="POST" action="{{ route('logout') }}" class="ml-4">
+                    @csrf
+                    <button type="submit" class="text-sm font-medium text-red-500 hover:text-red-700 hover:bg-red-50 px-3 py-1.5 rounded-md transition-colors border border-transparent hover:border-red-200">
+                        Logout
+                    </button>
+                </form>
             </div>
         </header>
 
