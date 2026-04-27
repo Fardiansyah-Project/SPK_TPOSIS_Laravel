@@ -23,8 +23,8 @@
         @method('PUT')
         <div class="space-y-4">
             <div>
-                <label for="kode" class="block text-sm font-medium text-gray-700">Kode Kriteria</label>
-                <input type="text" name="kode" id="kode" value="{{ old('kode', $kriterium->kode) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm border p-2" required>
+                <label for="kode" class="block text-sm font-medium text-gray-700">Kode Kriteria (Otomatis)</label>
+                <input type="text" name="kode" id="kode" value="{{ old('kode', $kriterium->kode) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm border p-2 bg-gray-100" readonly>
             </div>
             
             <div>

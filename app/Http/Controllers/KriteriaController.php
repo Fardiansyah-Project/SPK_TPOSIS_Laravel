@@ -15,7 +15,8 @@ class KriteriaController extends Controller
 
     public function create()
     {
-        return view('kriteria.create');
+        $nextKode = 'C' . (Kriteria::count() + 1);
+        return view('kriteria.create', compact('nextKode'));
     }
 
     public function store(Request $request)
@@ -28,7 +29,21 @@ class KriteriaController extends Controller
             'keterangan' => 'required|in:Sangat Penting,Penting,Cukup Penting,Kurang Penting',
         ]);
 
-        Kriteria::create($request->all());
+        $kriteria = new Kriteria();
+        $kriteria->kode = $request->kode;
+        $kriteria->nama = $request->nama;
+        $kriteria->atribut = $request->atribut;
+        $kriteria->bobot = $request->bobot;
+        if ($request->bobot >= 0.20) {
+            $kriteria->keterangan = "Sangat Penting";
+        } elseif ($request->bobot >= 0.15) {
+            $kriteria->keterangan = "Penting";
+        } elseif ($request->bobot >= 0.10) {
+            $kriteria->keterangan = "Cukup Penting";
+        } elseif ($request->bobot >= 0.05) {
+            $kriteria->keterangan = "Kurang Penting";
+        }
+        $kriteria->save();
 
         return redirect()->route('kriteria.index')->with('success', 'Kriteria berhasil ditambahkan.');
     }
@@ -42,7 +57,7 @@ class KriteriaController extends Controller
     public function update(Request $request, Kriteria $kriterium)
     {
         $request->validate([
-            'kode' => 'required|unique:kriterias,kode,'.$kriterium->id,
+            'kode' => 'required|unique:kriterias,kode,' . $kriterium->id,
             'nama' => 'required',
             'bobot' => 'required|numeric',
             'atribut' => 'required|in:Benefit,Cost',
