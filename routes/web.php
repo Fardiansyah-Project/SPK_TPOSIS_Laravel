@@ -14,15 +14,14 @@ Route::get('/', function () {
     return redirect()->route('topsis.index');
 });
 
-// Authentication Routes
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Protected Routes
 Route::middleware('auth')->group(function () {
+    Route::get('/topsis/pdf', [TopsisController::class, 'exportPdf'])->name('topsis.pdf');
     Route::get('/topsis', [TopsisController::class, 'index'])->name('topsis.index');
-    
+
     Route::resource('kriteria', KriteriaController::class);
     Route::resource('sub-kriteria', SubKriteriaController::class);
     Route::resource('objek', ObjekController::class);

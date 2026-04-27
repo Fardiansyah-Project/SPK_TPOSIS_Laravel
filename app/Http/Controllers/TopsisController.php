@@ -6,9 +6,11 @@ use App\Models\Alternatif;
 use App\Models\Kriteria;
 use Illuminate\Http\Request;
 
+use Barryvdh\DomPDF\Facade\Pdf;
+
 class TopsisController extends Controller
 {
-    public function index()
+    private function calculateTopsis()
     {
         $kriterias = Kriteria::orderBy('kode', 'asc')->get();
         $alternatifs = Alternatif::with(['objek', 'penilaians.subKriteria'])->get();
@@ -105,7 +107,7 @@ class TopsisController extends Controller
             return $b['score'] <=> $a['score'];
         });
 
-        return view('topsis.index', compact(
+        return compact(
             'kriterias',
             'alternatifs',
             'matrix',
@@ -117,6 +119,19 @@ class TopsisController extends Controller
             'distancePositive',
             'distanceNegative',
             'preferences'
-        ));
+        );
+    }
+
+    public function index()
+    {
+        $data = $this->calculateTopsis();
+        return view('topsis.index', $data);
+    }
+
+    public function exportPdf()
+    {
+        $data = $this->calculateTopsis();
+        $pdf = Pdf::loadView('topsis.pdf', $data)->setPaper('a4', 'landscape');
+        return $pdf->download('Laporan_Perhitungan_TOPSIS.pdf');
     }
 }
