@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string("kode")->unique();
             $table->string("nama");
             $table->double("bobot");
+            $table->enum("atribut", ['Benefit', 'Cost']);
             $table->enum("keterangan", ['Sangat Penting', 'Penting', 'Cukup Penting', 'Kurang Penting']);
             $table->timestamps();
         });
