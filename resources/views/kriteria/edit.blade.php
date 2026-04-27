@@ -41,18 +41,20 @@
             </div>
 
             <div>
-                <label for="keterangan" class="block text-sm font-medium text-gray-700">Tingkat Kepentingan</label>
-                <select name="keterangan" id="keterangan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm border p-2" required>
+                <label for="bobot" class="block text-sm font-medium text-gray-700">Bobot</label>
+                <input type="number" step="0.01" name="bobot" id="bobot" value="{{ old('bobot', $kriterium->bobot) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm border p-2" required>
+            </div>
+
+            <div>
+                <label for="keterangan" class="block text-sm font-medium text-gray-700">Tingkat Kepentingan (Otomatis)</label>
+                <select name="keterangan" id="keterangan" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm border p-2 bg-gray-100 pointer-events-none" required tabindex="-1">
+                    <option value="">-- Terisi Otomatis --</option>
                     <option value="Sangat Penting" {{ old('keterangan', $kriterium->keterangan) == 'Sangat Penting' ? 'selected' : '' }}>Sangat Penting</option>
                     <option value="Penting" {{ old('keterangan', $kriterium->keterangan) == 'Penting' ? 'selected' : '' }}>Penting</option>
                     <option value="Cukup Penting" {{ old('keterangan', $kriterium->keterangan) == 'Cukup Penting' ? 'selected' : '' }}>Cukup Penting</option>
                     <option value="Kurang Penting" {{ old('keterangan', $kriterium->keterangan) == 'Kurang Penting' ? 'selected' : '' }}>Kurang Penting</option>
                 </select>
-            </div>
-
-            <div>
-                <label for="bobot" class="block text-sm font-medium text-gray-700">Bobot</label>
-                <input type="number" step="0.01" name="bobot" id="bobot" value="{{ old('bobot', $kriterium->bobot) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm border p-2" required>
+                <p class="text-xs text-gray-500 mt-1">Otomatis terisi berdasarkan nilai bobot yang Anda masukkan.</p>
             </div>
         </div>
 
@@ -63,4 +65,25 @@
         </div>
     </form>
 </div>
+
+<script>
+    document.getElementById('bobot').addEventListener('input', function() {
+        let bobot = parseFloat(this.value);
+        let select = document.getElementById('keterangan');
+        
+        if (isNaN(bobot)) {
+            select.value = '';
+        } else if (bobot >= 0.20) {
+            select.value = 'Sangat Penting';
+        } else if (bobot >= 0.15) {
+            select.value = 'Penting';
+        } else if (bobot >= 0.10) {
+            select.value = 'Cukup Penting';
+        } else if (bobot >= 0.05) {
+            select.value = 'Kurang Penting';
+        } else {
+            select.value = 'Kurang Penting'; // Default for below 0.05
+        }
+    });
+</script>
 @endsection
