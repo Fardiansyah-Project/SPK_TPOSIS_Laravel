@@ -24,7 +24,16 @@ class KriteriaController extends Controller
         $request->validate([
             'kode' => 'required|unique:kriterias,kode',
             'nama' => 'required',
-            'bobot' => 'required|numeric',
+            'bobot' => [
+                'required',
+                'numeric',
+                function ($attribute, $value, $fail) {
+                    $totalBobot = Kriteria::sum('bobot');
+                    if (round($totalBobot + $value, 2) > 1) {
+                        $fail('Total keseluruhan bobot tidak boleh lebih dari 1 (100%). Total bobot saat ini adalah ' . $totalBobot);
+                    }
+                },
+            ],
             'atribut' => 'required|in:Benefit,Cost',
             'keterangan' => 'required|in:Sangat Penting,Penting,Cukup Penting,Kurang Penting',
         ]);
@@ -59,7 +68,16 @@ class KriteriaController extends Controller
         $request->validate([
             'kode' => 'required|unique:kriterias,kode,' . $kriterium->id,
             'nama' => 'required',
-            'bobot' => 'required|numeric',
+            'bobot' => [
+                'required',
+                'numeric',
+                function ($attribute, $value, $fail) use ($kriterium) {
+                    $totalBobot = Kriteria::where('id', '!=', $kriterium->id)->sum('bobot');
+                    if (round($totalBobot + $value, 2) > 1) {
+                        $fail('Total keseluruhan bobot tidak boleh lebih dari 1 (100%). Total bobot kriteria lainnya adalah ' . $totalBobot);
+                    }
+                },
+            ],
             'atribut' => 'required|in:Benefit,Cost',
             'keterangan' => 'required|in:Sangat Penting,Penting,Cukup Penting,Kurang Penting',
         ]);
