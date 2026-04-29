@@ -29,7 +29,7 @@ Ikuti panduan berikut secara berurutan untuk menjalankan aplikasi ini di kompute
 Ekstrak folder proyek ini ke dalam komputer Anda, atau *clone* melalui terminal:
 ```bash
 git clone https://github.com/Fardiansyah-Project/SPK_TPOSIS_Laravel.git
-cd penentuan_BPNT_metode_TOPSIS
+cd SPK_TPOSIS_Laravel
 ```
 
 ### 2. Instal Dependensi PHP (Composer)
