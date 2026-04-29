@@ -10,7 +10,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class TopsisController extends Controller
 {
-    private function calculateTopsis()
+    public static function calculateTopsis()
     {
         $kriterias = Kriteria::orderBy('kode', 'asc')->get();
         $alternatifs = Alternatif::with(['objek', 'penilaians.subKriteria'])->get();
@@ -124,13 +124,13 @@ class TopsisController extends Controller
 
     public function index()
     {
-        $data = $this->calculateTopsis();
+        $data = self::calculateTopsis();
         return view('topsis.index', $data);
     }
 
     public function exportPdf()
     {
-        $data = $this->calculateTopsis();
+        $data = self::calculateTopsis();
         $pdf = Pdf::loadView('topsis.pdf', $data)->setPaper('a4', 'landscape');
         return $pdf->download('Laporan_Perhitungan_TOPSIS.pdf');
     }

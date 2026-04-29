@@ -11,15 +11,18 @@
         .glass-panel { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 to-slate-100 p-4">
+<body class="min-h-screen flex items-center justify-center p-4 bg-cover bg-center bg-no-repeat relative" style="background-image: url('{{ asset('images/bg_login.jpg') }}');">
+    
+    <!-- Overlay for better readability -->
+    <div class="absolute inset-0 bg-slate-900/50 backdrop-blur-sm z-0"></div>
 
-    <div class="max-w-md w-full glass-panel rounded-2xl shadow-xl border border-white/20 p-8 transform transition-all">
+    <div class="max-w-md w-full rounded-3xl shadow-2xl border border-white/40 p-10 transform transition-all relative z-10 bg-white/90 backdrop-blur-md">
         <div class="text-center mb-8">
-            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-indigo-100 text-indigo-600 mb-4 shadow-sm">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-indigo-600 text-white mb-4 shadow-lg shadow-indigo-500/30">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
             </div>
-            <h2 class="text-2xl font-bold text-gray-900 tracking-tight">Selamat Datang</h2>
-            <p class="text-sm text-gray-500 mt-2">Login ke Sistem Pendukung Keputusan BPNT</p>
+            <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight">Selamat Datang</h2>
+            <p class="text-sm text-gray-600 mt-2 font-medium">Sistem Pendukung Keputusan BPNT</p>
         </div>
 
         @if(session('success'))

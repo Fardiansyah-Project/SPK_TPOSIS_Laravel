@@ -7,11 +7,12 @@ use App\Http\Controllers\SubKriteriaController;
 use App\Http\Controllers\ObjekController;
 use App\Http\Controllers\AlternatifController;
 use App\Http\Controllers\PenilaianController;
+use App\Http\Controllers\DashboardController;
 
 use App\Http\Controllers\AuthController;
 
 Route::get('/', function () {
-    return redirect()->route('topsis.index');
+    return redirect()->route('dashboard');
 });
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -19,6 +20,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/topsis/pdf', [TopsisController::class, 'exportPdf'])->name('topsis.pdf');
     Route::get('/topsis', [TopsisController::class, 'index'])->name('topsis.index');
 
