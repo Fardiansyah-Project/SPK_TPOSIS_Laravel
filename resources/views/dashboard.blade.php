@@ -220,25 +220,37 @@
 
                 <div
                     class="bg-slate-900 rounded-2xl h-56 w-full relative overflow-hidden group-hover:shadow-lg transition-shadow duration-500">
-                    <!-- Decorative Modern Line Chart Placeholder -->
+                    <!-- Decorative Background -->
                     <div
-                        class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')]">
+                        class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] opacity-50">
                     </div>
                     <div
-                        class="absolute left-6 top-6 bottom-6 flex flex-col justify-between text-xs text-slate-400 font-medium z-10">
+                        class="absolute left-6 top-6 bottom-8 flex flex-col justify-between text-xs text-slate-400 font-medium z-10">
                         <span>1.0</span>
                         <span>0.5</span>
                         <span>0</span>
                     </div>
-                    <!-- Abstract Area Chart Shape -->
+                    <!-- Bars -->
                     <div
-                        class="absolute bottom-0 left-0 right-0 h-2/3 bg-gradient-to-t from-indigo-500/40 via-indigo-500/10 to-transparent">
-                        <svg viewBox="0 0 100 100" preserveAspectRatio="none"
-                            class="absolute w-full h-full drop-shadow-md">
-                            <path d="M0,100 L0,50 Q25,20 50,60 T100,30 L100,100 Z" fill="rgba(99, 102, 241, 0.2)" />
-                            <path d="M0,100 L0,50 Q25,20 50,60 T100,30" fill="none" stroke="rgba(129, 140, 248, 0.8)"
-                                stroke-width="2" />
-                        </svg>
+                        class="absolute left-16 right-6 bottom-8 h-[calc(100%-3.5rem)] flex items-end justify-around z-10 space-x-2">
+                        @foreach ($kriterias as $kriteria)
+                            @php
+                                $heightPercentage = min(100, max(5, ($kriteria->bobot / 1) * 100)); // max weight assumed 1.0 based on constraint
+                            @endphp
+                            <div class="relative w-full max-w-[32px] h-full flex items-end group/bar">
+                                <div class="w-full bg-gradient-to-t from-indigo-500/40 via-indigo-500/80 to-indigo-400 rounded-t-sm hover:from-indigo-400 hover:via-indigo-400 hover:to-indigo-300 transition-colors cursor-pointer relative shadow-sm"
+                                    style="height: {{ $heightPercentage }}%">
+                                    <div
+                                        class="absolute -top-8 left-1/2 -translate-x-1/2 bg-white text-slate-900 text-[10px] py-1 px-1.5 rounded opacity-0 group-hover/bar:opacity-100 transition-opacity font-bold whitespace-nowrap shadow-md z-20">
+                                        {{ $kriteria->bobot }}
+                                    </div>
+                                    <div
+                                        class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-slate-400 text-xs font-semibold truncate w-full text-center">
+                                        {{ $kriteria->kode }}
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -258,7 +270,7 @@
                 <!-- Modern Bar Chart Placeholder -->
                 <div class="relative h-56 w-full">
                     <!-- Grid Lines -->
-                    <div class="absolute left-8 right-0 top-0 bottom-0 flex flex-col justify-between">
+                    <div class="absolute left-8 right-0 top-0 bottom-6 flex flex-col justify-between">
                         <div class="w-full border-t border-slate-100 border-dashed"></div>
                         <div class="w-full border-t border-slate-100 border-dashed"></div>
                         <div class="w-full border-t border-slate-100 border-dashed"></div>
@@ -267,38 +279,45 @@
                     </div>
 
                     <div
-                        class="absolute left-0 top-0 bottom-0 flex flex-col justify-between text-xs text-slate-400 font-medium w-6 py-1">
+                        class="absolute left-0 top-0 bottom-6 flex flex-col justify-between text-xs text-slate-400 font-medium w-6 py-1">
                         <span>1.0</span>
                         <span>0.8</span>
                         <span>0.6</span>
                         <span>0.4</span>
                         <span>0.2</span>
+                        <span>0</span>
                     </div>
 
                     <!-- Bars -->
                     <div
-                        class="absolute left-12 right-4 bottom-0 h-full flex items-end justify-between px-2 pb-[1px] z-10">
-                        <div
-                            class="w-[12%] h-[85%] bg-gradient-to-t from-indigo-600 to-indigo-400 rounded-t-md hover:from-indigo-500 hover:to-indigo-300 transition-colors cursor-pointer group/bar relative">
-                            <div
-                                class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs py-1 px-2 rounded opacity-0 group-hover/bar:opacity-100 transition-opacity">
-                                0.85</div>
-                        </div>
-                        <div
-                            class="w-[12%] h-[65%] bg-gradient-to-t from-slate-300 to-slate-200 rounded-t-md hover:from-slate-400 hover:to-slate-300 transition-colors cursor-pointer">
-                        </div>
-                        <div
-                            class="w-[12%] h-[92%] bg-gradient-to-t from-indigo-600 to-indigo-400 rounded-t-md hover:from-indigo-500 hover:to-indigo-300 transition-colors cursor-pointer">
-                        </div>
-                        <div
-                            class="w-[12%] h-[45%] bg-gradient-to-t from-slate-300 to-slate-200 rounded-t-md hover:from-slate-400 hover:to-slate-300 transition-colors cursor-pointer">
-                        </div>
-                        <div
-                            class="w-[12%] h-[78%] bg-gradient-to-t from-indigo-600 to-indigo-400 rounded-t-md hover:from-indigo-500 hover:to-indigo-300 transition-colors cursor-pointer">
-                        </div>
-                        <div
-                            class="w-[12%] h-[30%] bg-gradient-to-t from-slate-300 to-slate-200 rounded-t-md hover:from-slate-400 hover:to-slate-300 transition-colors cursor-pointer">
-                        </div>
+                        class="absolute left-12 right-4 bottom-6 h-[calc(100%-1.5rem)] flex items-end justify-between px-2 pb-[1px] z-10">
+                        @if (!empty($preferences) && count($preferences) > 0)
+                            @foreach ($preferences as $index => $pref)
+                                @php
+                                    $score = $pref['score'];
+                                    $height = min(100, max(2, $score * 100)); // Minimum 2% height so it's visible
+                                    $isTop = $index === 0;
+                                @endphp
+                                <div class="relative w-[12%] flex flex-col justify-end items-center h-full group/bar">
+                                    <div class="w-full bg-gradient-to-t {{ $isTop ? 'from-indigo-600 to-indigo-400 hover:from-indigo-500 hover:to-indigo-300' : 'from-slate-300 to-slate-200 hover:from-slate-400 hover:to-slate-300' }} rounded-t-md transition-colors cursor-pointer relative"
+                                        style="height: {{ $height }}%;">
+                                        <div
+                                            class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs py-1 px-2 rounded opacity-0 group-hover/bar:opacity-100 transition-opacity whitespace-nowrap z-20 shadow-md">
+                                            {{ number_format($score, 4) }}
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="absolute -bottom-6 text-xs text-slate-500 font-semibold truncate w-full text-center">
+                                        {{-- {{ $pref['alternatif']->kode }} --}}
+                                        {{ $pref['alternatif']->objek->nama ?? 'Alternatif ' . $pref['alternatif']->id }}
+                                    </div>
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="w-full h-full flex items-center justify-center text-sm text-slate-400 italic">
+                                Belum ada data perhitungan
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
