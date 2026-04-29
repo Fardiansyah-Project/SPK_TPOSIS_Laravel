@@ -28,7 +28,7 @@ Ikuti panduan berikut secara berurutan untuk menjalankan aplikasi ini di kompute
 ### 1. Dapatkan Kode Sumber (Clone/Download)
 Ekstrak folder proyek ini ke dalam komputer Anda, atau *clone* melalui terminal:
 ```bash
-git clone <url-repository-ini>
+git clone https://github.com/Fardiansyah-Project/SPK_TPOSIS_Laravel.git
 cd penentuan_BPNT_metode_TOPSIS
 ```
 
